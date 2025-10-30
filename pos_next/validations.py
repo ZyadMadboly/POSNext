@@ -19,6 +19,7 @@ def validate_item(doc, method):
 			frappe.throw(_("Company is mandatory for new items. Leave empty only for global items that were created before this validation."))
 
 
+@frappe.whitelist()
 def item_query(doctype, txt, searchfield, start, page_len, filters):
 	"""
 	Custom query to filter items by company

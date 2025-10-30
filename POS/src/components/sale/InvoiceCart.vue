@@ -209,8 +209,24 @@
 							<!-- Price & UOM Row -->
 							<div class="flex items-center flex-wrap gap-1.5 mb-1.5">
 								<div class="flex items-center gap-1">
-									<span class="text-[11px] sm:text-xs font-bold text-gray-900">
-										{{ formatCurrency(item.rate) }}
+									<!-- Show both rates if they exist and are different -->
+									<div v-if="item.rate && item.price_list_rate && item.rate !== item.price_list_rate" class="flex flex-col">
+										<div class="flex items-center gap-1">
+											<span class="text-[11px] sm:text-xs font-bold text-gray-900">
+												{{ formatCurrency(item.rate) }}
+											</span>
+											<span class="text-[9px] text-gray-500 bg-blue-100 px-1 py-0.5 rounded text-blue-700 font-medium">Current</span>
+										</div>
+										<div class="flex items-center gap-1 mt-0.5">
+											<span class="text-[10px] sm:text-[11px] font-medium text-gray-500 line-through">
+												{{ formatCurrency(item.price_list_rate) }}
+											</span>
+											<span class="text-[8px] text-gray-400">List</span>
+										</div>
+									</div>
+									<!-- Show single rate if only one exists or they're the same -->
+									<span v-else class="text-[11px] sm:text-xs font-bold text-gray-900">
+										{{ formatCurrency(item.rate || item.price_list_rate || 0) }}
 									</span>
 									<span class="text-[10px] text-gray-500">/</span>
 									<span class="inline-flex items-center px-1.5 py-0.5 bg-gray-100 text-gray-700 rounded text-[10px] sm:text-xs font-semibold">
